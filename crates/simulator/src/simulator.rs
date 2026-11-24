@@ -1427,11 +1427,14 @@ impl Simulator {
         }
         let mut components = std::mem::take(&mut self.components);
         let mut wrote = false;
+        let ir = &self.ir;
         for c in &mut components {
             if c.listens_to(event) {
                 c.fire(event, self.time);
                 c.drain_logs();
-                wrote |= c.apply_outputs(self.ir.use_4state);
+                wrote |= c.apply_outputs_marking(ir.use_4state, &mut |ptr, len| {
+                    ir.dataflow_mark_ptr(ptr, len)
+                });
                 if c.host.failed() || c.host.finish_requested() {
                     self.status.request_stop();
                 }
@@ -1440,7 +1443,6 @@ impl Simulator {
         self.components = components;
         if wrote {
             self.comb_dirty = true;
-            self.ir.dataflow_mark_all();
             // A waveform's gate hears about writes only through the log.  The
             // test is what keeps a run without one off this path entirely.
             if self.dump.is_some() {

@@ -880,6 +880,16 @@ impl RuntimeComponent {
     /// the same edge's RTL saw pre-edge values (NBA semantics). Returns
     /// true when a stored value changed (the caller marks comb dirty).
     pub fn apply_outputs(&mut self, use_4state: bool) -> bool {
+        self.apply_outputs_marking(use_4state, &mut |_, _| {})
+    }
+
+    /// `apply_outputs`, passing `changed_at` the storage of each output whose
+    /// value changed.
+    pub fn apply_outputs_marking(
+        &mut self,
+        use_4state: bool,
+        changed_at: &mut dyn FnMut(*const u8, usize),
+    ) -> bool {
         let mut wrote = false;
         for out in &mut self.outputs {
             if !self.host.output_dirty_idx(out.idx) {
@@ -913,6 +923,10 @@ impl RuntimeComponent {
                 }
                 changed
             };
+            if changed {
+                let len = out.native_bytes * if use_4state { 2 } else { 1 };
+                changed_at(ptr, len);
+            }
             wrote |= changed;
         }
         self.host.clear_output_dirty();
