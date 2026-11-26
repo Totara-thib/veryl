@@ -1,6 +1,9 @@
 name: Commit Check
 
 on:
+  push:
+    branches:
+      - tmp-ci-run
   pull_request:
 
 permissions:

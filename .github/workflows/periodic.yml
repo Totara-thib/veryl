@@ -1,6 +1,9 @@
 name: Periodic
 
 on:
+  push:
+    branches:
+      - tmp-ci-run
   schedule:
   - cron: 0 0 * * SUN
 

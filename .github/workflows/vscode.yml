@@ -7,7 +7,7 @@ on:
       - 'support/highlightgen/**'
       - '.github/workflows/vscode.yml'
   push:
-    branches: [master]
+    branches: [master, tmp-ci-run]
     paths:
       - 'support/vscode/**'
       - 'support/highlightgen/**'

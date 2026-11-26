@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - "master"
-    paths:
-      - '**/Cargo.lock'
-      - '**/Cargo.toml'
-      - '**/deny.toml'
+      - tmp-ci-run
   pull_request:
     paths:
       - '**/Cargo.lock'
