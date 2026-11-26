@@ -43,6 +43,8 @@ jobs:
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       # Windows file I/O is slow on the build outputs. On Windows the build runs
       # in a copy of the workspace on a trusted Dev Drive (ReFS, no Defender
       # filter). target/ must be a real directory there: rust-cache archives
@@ -161,6 +163,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
@@ -177,6 +181,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
@@ -187,6 +193,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
@@ -213,6 +221,8 @@ jobs:
       SCCACHE_CACHE_SIZE: "1G"
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
       # Same rust-cache + sccache split as the build job above (deps via
       # rust-cache; workspace crates via sccache, under a distinct -sccache key).
@@ -251,6 +261,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
           name: veryl-release-verylup
@@ -275,6 +287,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           submodules: recursive
+          persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
           name: veryl-release-verylup
@@ -294,6 +307,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           submodules: recursive
+          persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
           name: veryl-release-verylup
@@ -308,6 +322,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
           name: veryl-release-verylup
@@ -328,6 +344,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
@@ -345,6 +363,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           submodules: 'true'
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         continue-on-error: true
@@ -361,6 +380,8 @@ jobs:
         working-directory: support/highlightjs
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: '22'
