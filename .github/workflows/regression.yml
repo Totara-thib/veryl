@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - tmp-ci-run-rebased
   pull_request:
 
 permissions:
